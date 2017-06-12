@@ -171,8 +171,13 @@
 }
 
 - (CGSize)_properPresentSizeForImage:(UIImage *)image {
-    CGFloat ratio = CGRectGetWidth(self.bounds) / image.size.width;
-    return CGSizeMake(CGRectGetWidth(self.bounds), ceil(ratio * image.size.height));
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+        CGFloat ratio = CGRectGetHeight(self.bounds) / image.size.height;
+        return CGSizeMake(ceil(ratio * image.size.width), CGRectGetHeight(self.bounds));
+    } else {
+        CGFloat ratio = CGRectGetWidth(self.bounds) / image.size.width;
+        return CGSizeMake(CGRectGetWidth(self.bounds), ceil(ratio * image.size.height));
+    }
 }
 
 - (void)_recenterImage {
